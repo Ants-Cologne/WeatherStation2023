@@ -1,0 +1,7 @@
+[antconfig 1.0]
+# # Messor barbarus - Ants Cologne
+Messor barbarus
+20
+30
+30
+70
