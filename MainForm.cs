@@ -19,25 +19,22 @@ namespace WeatherStation2023
 {
     public partial class MainForm : Form
     {
-        //int _id = 0;
         #region Private class variables
         ConnectionSetupForm connectionSetupForm;
         InfoForm infoForm;
-        HelpForm helpForm;
         SensorStatisticsForm sensorStatisticsForm;
         ColorValues colorForm;
         StatisticsForm statisticsForm;
 
-        List<string>[] fulldata;    // this is only loaded once
         string[] sensors;
         List<Sensor> sensorList;
         List<String> sensorConfig;
 
         // Database variables.
         MySqlConnection conDataBase, cdb1, cdb2, cdb3, cdb4;
-        MySqlDataReader dbReader, dbr1, dbr2, dbr3, dbr4;
+        /*MySqlDataReader dbReader, dbr1, dbr2, dbr3, dbr4;
         MySqlCommand command, com1, com2, com3, com4;
-        private string sql, sql1, sql2, sql3, sql4;
+        private string sql, sql1, sql2, sql3, sql4;*/
         string connectionString;
         #endregion
 
@@ -524,10 +521,11 @@ namespace WeatherStation2023
 
         private void showHelpForm()
         {
-            helpForm = new HelpForm();
+            /*helpForm = new HelpForm();
             helpForm.MdiParent = this.ParentForm;
             helpForm.StartPosition = FormStartPosition.CenterParent;
-            helpForm.ShowDialog();
+            helpForm.ShowDialog();*/
+            System.Diagnostics.Process.Start("WeatherStation2023.pdf");
         }
         
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
