@@ -57,6 +57,8 @@
             this.mainTimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.dbBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.showErrorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainStatusStrip.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
@@ -137,7 +139,9 @@
             this.sensorMappingToolStripMenuItem,
             this.toolStripMenuItem1,
             this.showHelpIconsToolStripMenuItem,
-            this.showToolbarToolStripMenuItem});
+            this.showToolbarToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.showErrorsToolStripMenuItem});
             this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
             this.setupToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.setupToolStripMenuItem.Text = "&Setup";
@@ -194,7 +198,7 @@
             // 
             this.helpToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripMenuItem1.Image")));
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(99, 22);
             this.helpToolStripMenuItem1.Text = "&Help";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
@@ -202,7 +206,7 @@
             // 
             this.infoToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("infoToolStripMenuItem.Image")));
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.infoToolStripMenuItem.Text = "&Info";
             this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
@@ -291,6 +295,18 @@
             this.dbBackgroundWorker.WorkerReportsProgress = true;
             this.dbBackgroundWorker.WorkerSupportsCancellation = true;
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(186, 6);
+            // 
+            // showErrorsToolStripMenuItem
+            // 
+            this.showErrorsToolStripMenuItem.Name = "showErrorsToolStripMenuItem";
+            this.showErrorsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.showErrorsToolStripMenuItem.Text = "Show &Errors (Debug)";
+            this.showErrorsToolStripMenuItem.Click += new System.EventHandler(this.showErrorsToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -348,6 +364,8 @@
         private System.Windows.Forms.ToolStripButton help_infoTSB;
         private System.Windows.Forms.ToolStripMenuItem showToolbarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sensorStatisticsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem showErrorsToolStripMenuItem;
     }
 }
 

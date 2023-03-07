@@ -298,5 +298,17 @@ namespace WeatherStation2023.Properties {
                 this["SensorStatLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowDebug {
+            get {
+                return ((bool)(this["ShowDebug"]));
+            }
+            set {
+                this["ShowDebug"] = value;
+            }
+        }
     }
 }

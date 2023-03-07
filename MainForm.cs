@@ -32,9 +32,6 @@ namespace WeatherStation2023
 
         // Database variables.
         MySqlConnection conDataBase, cdb1, cdb2, cdb3, cdb4;
-        /*MySqlDataReader dbReader, dbr1, dbr2, dbr3, dbr4;
-        MySqlCommand command, com1, com2, com3, com4;
-        private string sql, sql1, sql2, sql3, sql4;*/
         string connectionString;
         #endregion
 
@@ -52,6 +49,11 @@ namespace WeatherStation2023
             checkCountSensorProp();
 
             loadSensorConfig();
+
+            if (Properties.Settings.Default.ShowDebug)
+            {
+                showErrorsToolStripMenuItem.Checked = true;
+            }
 
             if (sensorList.Count > 0)   // User settings are available.
             {
@@ -526,6 +528,21 @@ namespace WeatherStation2023
             infoForm.StartPosition = FormStartPosition.CenterParent;
             infoForm.ShowDialog();
         }
+
+        private void showErrorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (showErrorsToolStripMenuItem.Checked)
+            {
+                showErrorsToolStripMenuItem.Checked = false;
+                Properties.Settings.Default.ShowDebug = false;
+            }
+            else
+            {
+                showErrorsToolStripMenuItem.Checked = true;
+                Properties.Settings.Default.ShowDebug = true;
+            }
+        }
+
         private void helpTSB_Click(object sender, EventArgs e)
         {
             showHelpForm();

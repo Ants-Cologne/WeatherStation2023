@@ -30,16 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SensorStatisticsForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.senorMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statStatusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.loadProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.statToolStrip = new System.Windows.Forms.ToolStrip();
             this.exitTSB = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -83,8 +82,7 @@
             // statStatusStrip
             // 
             this.statStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel,
-            this.loadProgressBar});
+            this.statusLabel});
             this.statStatusStrip.Location = new System.Drawing.Point(0, 511);
             this.statStatusStrip.Name = "statStatusStrip";
             this.statStatusStrip.Size = new System.Drawing.Size(670, 22);
@@ -96,11 +94,6 @@
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(66, 17);
             this.statusLabel.Text = "statusLabel";
-            // 
-            // loadProgressBar
-            // 
-            this.loadProgressBar.Name = "loadProgressBar";
-            this.loadProgressBar.Size = new System.Drawing.Size(100, 16);
             // 
             // statToolStrip
             // 
@@ -150,30 +143,30 @@
             // 
             // sensorChart
             // 
-            chartArea1.AxisX.Title = "Time";
-            chartArea1.AxisY.Title = "Value";
-            chartArea1.Name = "ChartArea1";
-            this.sensorChart.ChartAreas.Add(chartArea1);
+            chartArea2.AxisX.Title = "Time";
+            chartArea2.AxisY.Title = "Value";
+            chartArea2.Name = "ChartArea1";
+            this.sensorChart.ChartAreas.Add(chartArea2);
             this.sensorChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend1.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend1);
+            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend2.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend2);
             this.sensorChart.Location = new System.Drawing.Point(0, 63);
             this.sensorChart.Name = "sensorChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.Blue;
-            series1.Legend = "Legend1";
-            series1.LegendText = "Humidity [%]";
-            series1.Name = "humidity";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.LegendText = "Temperature [°C]";
-            series2.Name = "temperature";
-            this.sensorChart.Series.Add(series1);
-            this.sensorChart.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Color = System.Drawing.Color.Blue;
+            series3.Legend = "Legend1";
+            series3.LegendText = "Humidity [%]";
+            series3.Name = "humidity";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Color = System.Drawing.Color.Red;
+            series4.Legend = "Legend1";
+            series4.LegendText = "Temperature [°C]";
+            series4.Name = "temperature";
+            this.sensorChart.Series.Add(series3);
+            this.sensorChart.Series.Add(series4);
             this.sensorChart.Size = new System.Drawing.Size(670, 448);
             this.sensorChart.TabIndex = 3;
             this.sensorChart.Text = "chart1";
@@ -227,7 +220,6 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStrip statToolStrip;
         private System.Windows.Forms.ToolStripButton exitTSB;
-        private System.Windows.Forms.ToolStripProgressBar loadProgressBar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox filterComboBox;

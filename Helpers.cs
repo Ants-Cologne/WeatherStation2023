@@ -20,7 +20,10 @@ namespace WeatherStation2023
         #region MessageBox-Aliases
         public static void ShowError(string message, string errorcode)
         {
-            ShowMessageDialog(message, "Error: " + errorcode, Type.Error);
+            if (Properties.Settings.Default.ShowDebug)
+            {
+                ShowMessageDialog(message, "Error: " + errorcode, Type.Error);
+            }
         }
 
         public static void ShowInfo(string message, string title)
