@@ -150,7 +150,7 @@ namespace WeatherStation2023
             catch (Exception ex)
             {
                 // at least we need to check if the host is not available: currently app crashes
-                Helpers.ShowError(ex.Message, "0002_BgwSen");
+                Helpers.ShowError(ex.Message, "0002_BgwSen-" + ID.ToString());
             }
             finally { conDataBase.Close(); }
         }

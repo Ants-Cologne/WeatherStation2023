@@ -403,8 +403,7 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                // comment out if ex is handled correctly
-                MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError(ex.Message, "0005_BgwSf");
             }
 
             return tmp;

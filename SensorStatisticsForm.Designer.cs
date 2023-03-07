@@ -39,13 +39,13 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statStatusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.loadProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.statToolStrip = new System.Windows.Forms.ToolStrip();
             this.exitTSB = new System.Windows.Forms.ToolStripButton();
-            this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.filterComboBox = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.sensorWorker = new System.ComponentModel.BackgroundWorker();
             this.sensorTimer = new System.Windows.Forms.Timer(this.components);
             this.senorMenuStrip.SuspendLayout();
@@ -60,7 +60,7 @@
             this.fileToolStripMenuItem});
             this.senorMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.senorMenuStrip.Name = "senorMenuStrip";
-            this.senorMenuStrip.Size = new System.Drawing.Size(800, 24);
+            this.senorMenuStrip.Size = new System.Drawing.Size(670, 24);
             this.senorMenuStrip.TabIndex = 0;
             this.senorMenuStrip.Text = "menuStrip1";
             // 
@@ -76,7 +76,7 @@
             // 
             this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -84,10 +84,10 @@
             // 
             this.statStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
-            this.toolStripProgressBar1});
-            this.statStatusStrip.Location = new System.Drawing.Point(0, 428);
+            this.loadProgressBar});
+            this.statStatusStrip.Location = new System.Drawing.Point(0, 511);
             this.statStatusStrip.Name = "statStatusStrip";
-            this.statStatusStrip.Size = new System.Drawing.Size(800, 22);
+            this.statStatusStrip.Size = new System.Drawing.Size(670, 22);
             this.statStatusStrip.TabIndex = 1;
             this.statStatusStrip.Text = "statusStrip1";
             // 
@@ -96,6 +96,11 @@
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(66, 17);
             this.statusLabel.Text = "statusLabel";
+            // 
+            // loadProgressBar
+            // 
+            this.loadProgressBar.Name = "loadProgressBar";
+            this.loadProgressBar.Size = new System.Drawing.Size(100, 16);
             // 
             // statToolStrip
             // 
@@ -107,7 +112,7 @@
             this.filterComboBox});
             this.statToolStrip.Location = new System.Drawing.Point(0, 24);
             this.statToolStrip.Name = "statToolStrip";
-            this.statToolStrip.Size = new System.Drawing.Size(800, 39);
+            this.statToolStrip.Size = new System.Drawing.Size(670, 39);
             this.statToolStrip.TabIndex = 2;
             this.statToolStrip.Text = "toolStrip1";
             // 
@@ -120,34 +125,6 @@
             this.exitTSB.Size = new System.Drawing.Size(36, 36);
             this.exitTSB.Text = "Exit";
             this.exitTSB.Click += new System.EventHandler(this.exitTSB_Click);
-            // 
-            // sensorChart
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.sensorChart.ChartAreas.Add(chartArea1);
-            this.sensorChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend1.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend1);
-            this.sensorChart.Location = new System.Drawing.Point(0, 63);
-            this.sensorChart.Name = "sensorChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Color = System.Drawing.Color.Blue;
-            series1.Legend = "Legend1";
-            series1.LegendText = "Humidity [%]";
-            series1.Name = "humidity";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Red;
-            series2.Legend = "Legend1";
-            series2.LegendText = "Temperature [°C]";
-            series2.Name = "temperature";
-            this.sensorChart.Series.Add(series1);
-            this.sensorChart.Series.Add(series2);
-            this.sensorChart.Size = new System.Drawing.Size(800, 365);
-            this.sensorChart.TabIndex = 3;
-            this.sensorChart.Text = "chart1";
             // 
             // toolStripSeparator1
             // 
@@ -171,10 +148,35 @@
             this.filterComboBox.Size = new System.Drawing.Size(121, 39);
             this.filterComboBox.SelectedIndexChanged += new System.EventHandler(this.filterComboBox_SelectedIndexChanged);
             // 
-            // toolStripProgressBar1
+            // sensorChart
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            chartArea1.AxisX.Title = "Time";
+            chartArea1.AxisY.Title = "Value";
+            chartArea1.Name = "ChartArea1";
+            this.sensorChart.ChartAreas.Add(chartArea1);
+            this.sensorChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend1.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend1);
+            this.sensorChart.Location = new System.Drawing.Point(0, 63);
+            this.sensorChart.Name = "sensorChart";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.Blue;
+            series1.Legend = "Legend1";
+            series1.LegendText = "Humidity [%]";
+            series1.Name = "humidity";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Color = System.Drawing.Color.Red;
+            series2.Legend = "Legend1";
+            series2.LegendText = "Temperature [°C]";
+            series2.Name = "temperature";
+            this.sensorChart.Series.Add(series1);
+            this.sensorChart.Series.Add(series2);
+            this.sensorChart.Size = new System.Drawing.Size(670, 448);
+            this.sensorChart.TabIndex = 3;
+            this.sensorChart.Text = "chart1";
             // 
             // sensorWorker
             // 
@@ -192,7 +194,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(670, 533);
             this.Controls.Add(this.sensorChart);
             this.Controls.Add(this.statToolStrip);
             this.Controls.Add(this.statStatusStrip);
@@ -225,7 +227,7 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStrip statToolStrip;
         private System.Windows.Forms.ToolStripButton exitTSB;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripProgressBar loadProgressBar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox filterComboBox;

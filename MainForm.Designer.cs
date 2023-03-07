@@ -37,6 +37,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sensorStatisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databaseConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sensorMappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,6 @@
             this.mainTimer = new System.Windows.Forms.Timer(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.dbBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.sensorStatisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainStatusStrip.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.mainToolStrip.SuspendLayout();
@@ -120,9 +120,15 @@
             // 
             this.statisticsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("statisticsToolStripMenuItem.Image")));
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.statisticsToolStripMenuItem.Text = "S&tatistics";
             this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
+            // 
+            // sensorStatisticsToolStripMenuItem
+            // 
+            this.sensorStatisticsToolStripMenuItem.Name = "sensorStatisticsToolStripMenuItem";
+            this.sensorStatisticsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.sensorStatisticsToolStripMenuItem.Text = "S&ensor statistics";
             // 
             // setupToolStripMenuItem
             // 
@@ -285,12 +291,6 @@
             this.dbBackgroundWorker.WorkerReportsProgress = true;
             this.dbBackgroundWorker.WorkerSupportsCancellation = true;
             // 
-            // sensorStatisticsToolStripMenuItem
-            // 
-            this.sensorStatisticsToolStripMenuItem.Name = "sensorStatisticsToolStripMenuItem";
-            this.sensorStatisticsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.sensorStatisticsToolStripMenuItem.Text = "S&ensor statistics";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -300,6 +300,7 @@
             this.Controls.Add(this.mainToolStrip);
             this.Controls.Add(this.mainStatusStrip);
             this.Controls.Add(this.mainMenuStrip);
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenuStrip;
             this.Name = "MainForm";

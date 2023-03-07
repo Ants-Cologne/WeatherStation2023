@@ -88,7 +88,7 @@ namespace WeatherStation2023
 
                     flowLayoutPanel.Controls.Add(customGroupBox);
 
-                    // Add to toolstrip menu
+                    // Add to toolstrip menu to show sensor charts
                     addSensorToolStripMenuItem(s);
                 }
                 connectionStatusLbl.Text = $"{sensorList.Count} Sensors loaded from User Settings!";
@@ -101,17 +101,7 @@ namespace WeatherStation2023
             }
 
             checkToolbar();
-            /*for (int i = 0; i < 5; i++)
-            
-                var customGroupBox = new SensorGroupBox
-                {
-                    Text = $"Sensor {++_id}",
-                    Width = flowLayoutPanel.Width - SystemInformation.VerticalScrollBarWidth,
-                    Padding = new Padding(),
-                    Margin = new Padding(),
-                };
-                flowLayoutPanel.Controls.Add(customGroupBox);
-            }*/
+
             //buttonClear.Click += (sender, e) => flowLayoutPanel.Controls.Clear();
         }
 
@@ -521,10 +511,6 @@ namespace WeatherStation2023
 
         private void showHelpForm()
         {
-            /*helpForm = new HelpForm();
-            helpForm.MdiParent = this.ParentForm;
-            helpForm.StartPosition = FormStartPosition.CenterParent;
-            helpForm.ShowDialog();*/
             System.Diagnostics.Process.Start("WeatherStation2023.pdf");
         }
         
@@ -561,7 +547,10 @@ namespace WeatherStation2023
             {
                 try
                 {
-                    s.MyBackgroundWorker.RunWorkerAsync();
+                    if (s.MyBackgroundWorker.IsBusy != true)
+                    {
+                        s.MyBackgroundWorker.RunWorkerAsync();
+                    }   
                 }
                 catch (Exception ex)
                 {
