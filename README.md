@@ -1,3 +1,3 @@
 # WeatherStation2023
 
-This project is intended to use a Raspberry Pi to collect sensor data and show them in this C# application.
+C# code to query a MariaDB on a Raspberry Pi that collects data from DHT22 sensors (temperture and humidity). 
