@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
 using MySql.Data.MySqlClient;
 
 namespace WeatherStation2023
@@ -89,7 +85,49 @@ namespace WeatherStation2023
 
         private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DateTime thisDay = DateTime.Today;
+            List<Dictionary<string, string>> copyAllSensorValues = allSensorValues;
 
+            if (filterComboBox.Text.Length > 0)
+            {
+                sensorChart.Series[0].Points.Clear();
+                sensorChart.Series[1].Points.Clear();
+
+                foreach (Dictionary<string, string> item in copyAllSensorValues)
+                {
+                    DateTime dt = DateTime.Parse(item["created_at"]);
+                    if (filterComboBox.Text.Length == 4)    // Year
+                    {
+                        if (dt.Year == Int16.Parse(filterComboBox.Text)) 
+                        {
+                            sensorChart.Series[1].Points.AddXY(dt, Double.Parse(item["temp"]));
+                            sensorChart.Series[0].Points.AddXY(dt, Double.Parse(item["hygro"]));
+                        }
+                    }
+                    else if (filterComboBox.Text.Length == 7)   // Month
+                    {
+                        if (dt.Year == Int16.Parse(filterComboBox.Text.Substring(0,4)) && 
+                            dt.Month == Int16.Parse(filterComboBox.Text.Substring(5,2)))
+                        {
+                            sensorChart.Series[1].Points.AddXY(dt, Double.Parse(item["temp"]));
+                            sensorChart.Series[0].Points.AddXY(dt, Double.Parse(item["hygro"]));
+                        }
+                    }
+                    else if (filterComboBox.Text.Length == 10)   // Today
+                    {
+                        if (dt.Date == thisDay.Date)
+                        {
+                            sensorChart.Series[1].Points.AddXY(dt, Double.Parse(item["temp"]));
+                            sensorChart.Series[0].Points.AddXY(dt, Double.Parse(item["hygro"]));
+                        }
+                    }
+                    else if (filterComboBox.Text == "All data")
+                    {
+                        sensorChart.Series[1].Points.AddXY(dt, Double.Parse(item["temp"]));
+                        sensorChart.Series[0].Points.AddXY(dt, Double.Parse(item["hygro"]));
+                    }
+                }
+            }
         }
 
         private void changeXaxis()
@@ -178,8 +216,7 @@ namespace WeatherStation2023
                     result["hygro"] = dbReader.GetDouble(Properties.Settings.Default.DbHumValProp).ToString();
                     result["created_at"] = dt.ToString();
 
-                    allSensorValues.Add(result);
-                    
+                    allSensorValues.Add(result);                   
                 }
 
                 conDataBase.Close();
@@ -192,11 +229,6 @@ namespace WeatherStation2023
             finally { conDataBase.Close(); }
         }
 
-        private void sensorWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-
-        }
-
         private void sensorWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             List<Dictionary<string, string>> tmp = checkBackGroundWorker(e);
@@ -206,6 +238,7 @@ namespace WeatherStation2023
                 statusLabel.Text = "Loaded " + tmp.Count.ToString() + " datasets";
                 sensorChart.Series[0].Points.Clear();
                 sensorChart.Series[1].Points.Clear();
+                DateTime thisDay = DateTime.Today;
 
                 for (int i = 0; i < tmp.Count; i++)
                 {
@@ -216,18 +249,19 @@ namespace WeatherStation2023
                         {
                             filterComboBox.Items.Add(dt.Year.ToString());
                         }
-                        if (!filterComboBox.Items.Contains(dt.Year + "-" + dt.Month.ToString()))
+                        if (!filterComboBox.Items.Contains(dt.ToString("yyyy-MM")))
                         {
-                            filterComboBox.Items.Add(dt.Year + "-" + dt.Month.ToString());
+                            filterComboBox.Items.Add(dt.ToString("yyyy-MM"));
                         }
-                        if (!filterComboBox.Items.Contains(dt.Year + "-" + dt.Month.ToString() + "-" + dt.Day.ToString()))
+                        if (dt.Date == thisDay.Date && !filterComboBox.Items.Contains(dt.ToString("yyyy-MM-dd")))
                         {
-                            filterComboBox.Items.Add(dt.Year + "-" + dt.Month.ToString() + "-" + dt.Day.ToString());
+                            filterComboBox.Items.Add(dt.ToString("yyyy-MM-dd"));
                         }
                     }
                     sensorChart.Series[1].Points.AddXY(dt, Double.Parse(tmp[i]["temp"]));
                     sensorChart.Series[0].Points.AddXY(dt, Double.Parse(tmp[i]["hygro"]));
-                } 
+                }
+                filterComboBox.Text = "All data";
             }
         }
 

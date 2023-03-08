@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SensorStatisticsForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.senorMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -137,9 +137,6 @@
             // filterComboBox
             // 
             this.filterComboBox.Items.AddRange(new object[] {
-            "Today",
-            "Month",
-            "Year",
             "All data"});
             this.filterComboBox.Name = "filterComboBox";
             this.filterComboBox.Size = new System.Drawing.Size(121, 39);
@@ -147,36 +144,36 @@
             // 
             // sensorChart
             // 
-            chartArea2.AxisX.IsLabelAutoFit = false;
-            chartArea2.AxisX.LabelStyle.Angle = 45;
-            chartArea2.AxisX.Title = "Time";
-            chartArea2.AxisY.Title = "Value";
-            chartArea2.Name = "ChartArea1";
-            this.sensorChart.ChartAreas.Add(chartArea2);
+            chartArea4.AxisX.IsLabelAutoFit = false;
+            chartArea4.AxisX.LabelStyle.Angle = 45;
+            chartArea4.AxisX.Title = "Time";
+            chartArea4.AxisY.Title = "Value";
+            chartArea4.Name = "ChartArea1";
+            this.sensorChart.ChartAreas.Add(chartArea4);
             this.sensorChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend2.Name = "Legend1";
-            this.sensorChart.Legends.Add(legend2);
+            legend4.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend4.Name = "Legend1";
+            this.sensorChart.Legends.Add(legend4);
             this.sensorChart.Location = new System.Drawing.Point(0, 63);
             this.sensorChart.Name = "sensorChart";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Color = System.Drawing.Color.Blue;
-            series3.Legend = "Legend1";
-            series3.LegendText = "Humidity [%]";
-            series3.Name = "humidity";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Color = System.Drawing.Color.Red;
-            series4.Legend = "Legend1";
-            series4.LegendText = "Temperature [°C]";
-            series4.Name = "temperature";
-            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.sensorChart.Series.Add(series3);
-            this.sensorChart.Series.Add(series4);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series7.Color = System.Drawing.Color.Blue;
+            series7.Legend = "Legend1";
+            series7.LegendText = "Humidity [%]";
+            series7.Name = "humidity";
+            series7.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series7.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series8.Color = System.Drawing.Color.Red;
+            series8.Legend = "Legend1";
+            series8.LegendText = "Temperature [°C]";
+            series8.Name = "temperature";
+            series8.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series8.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.sensorChart.Series.Add(series7);
+            this.sensorChart.Series.Add(series8);
             this.sensorChart.Size = new System.Drawing.Size(670, 448);
             this.sensorChart.TabIndex = 3;
             this.sensorChart.Text = "chart1";
@@ -184,7 +181,6 @@
             // sensorWorker
             // 
             this.sensorWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.sensorWorker_DoWork);
-            this.sensorWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.sensorWorker_ProgressChanged);
             this.sensorWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.sensorWorker_RunWorkerCompleted);
             // 
             // sensorTimer
