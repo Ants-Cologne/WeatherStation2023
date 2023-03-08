@@ -49,43 +49,7 @@ namespace WeatherStation2023
 
             if (sensorList.Count > 0)   // User settings are available.
             {
-                List<String> listStrLineElements;
-                string tmp_txt, species;
-
-                for (int i = 0; i < sensorList.Count; i++)
-                {
-                    Sensor s = sensorList[i];
-                    listStrLineElements = sensorConfig[i].Split('\t').ToList();
-                    // Get AliasLabel from config file
-                    if (listStrLineElements[1] != "") tmp_txt = s.PublicLabel + " (" + listStrLineElements[1] + ")";
-                    else tmp_txt = s.PublicLabel;
-                    // Get species
-                    species = getSpecies(listStrLineElements[2]);
-                    if (species != "")
-                    {
-                        tmp_txt += " - Species: " + species;
-                    }
-                    
-                    var customGroupBox = new SensorGroupBox
-                    {
-                        Text = tmp_txt,
-                        Width = flowLayoutPanel.Width - SystemInformation.VerticalScrollBarWidth,
-                        Padding = new Padding(),
-                        Margin = new Padding(),
-                    };
-                    s.TempLabel = customGroupBox.TemperatureLabel;
-                    s.HumidityLabel = customGroupBox.HumidityLabel;
-                    s.TimeLabel = customGroupBox.TimeStampLabel;
-
-                    // set temperature and humidity colors
-                    setColors(listStrLineElements[2], s);
-
-                    flowLayoutPanel.Controls.Add(customGroupBox);
-
-                    // Add to toolstrip menu to show sensor charts
-                    addSensorToolStripMenuItem(s);
-                }
-                connectionStatusLbl.Text = $"{sensorList.Count} Sensors loaded from User Settings!";
+                loadUserSettings();
 
                 runBackgroundWorkers();
             }
@@ -157,6 +121,49 @@ namespace WeatherStation2023
         }
         #endregion
 
+        private void loadUserSettings()
+        {
+            List<String> listStrLineElements;
+            string tmp_txt, species;
+
+            for (int i = 0; i < sensorList.Count; i++)
+            {
+                Sensor s = sensorList[i];
+                tmp_txt = s.PublicLabel;
+                if (sensorConfig.Count > 0)
+                {
+                    listStrLineElements = sensorConfig[i].Split('\t').ToList();
+                    // Get AliasLabel from config file
+                    if (listStrLineElements[1] != "") tmp_txt = s.PublicLabel + " (" + listStrLineElements[1] + ")";
+                    // Get species
+                    species = getSpecies(listStrLineElements[2]);
+                    if (species != "")
+                    {
+                        tmp_txt += " - Species: " + species;
+                    }
+                    // set temperature and humidity colors
+                    setColors(listStrLineElements[2], s);
+                }
+
+                // Create the sensor groupbox.
+                var customGroupBox = new SensorGroupBox
+                {
+                    Text = tmp_txt,
+                    Width = flowLayoutPanel.Width - SystemInformation.VerticalScrollBarWidth,
+                    Padding = new Padding(),
+                    Margin = new Padding(),
+                };
+                s.TempLabel = customGroupBox.TemperatureLabel;
+                s.HumidityLabel = customGroupBox.HumidityLabel;
+                s.TimeLabel = customGroupBox.TimeStampLabel;
+
+                flowLayoutPanel.Controls.Add(customGroupBox);
+
+                // Add to toolstrip menu to show sensor charts
+                addSensorToolStripMenuItem(s);
+            }
+            connectionStatusLbl.Text = $"{sensorList.Count} Sensors loaded from User Settings!";
+        }
         private void addSensorToolStripMenuItem(Sensor sens)
         {
             ToolStripMenuItem menuItem = new ToolStripMenuItem(sens.PublicLabel, null, showSensorStatistics);
@@ -489,6 +496,13 @@ namespace WeatherStation2023
             colorForm.MdiParent = this.ParentForm;
             colorForm.StartPosition = FormStartPosition.CenterParent;
             colorForm.ShowDialog();
+            colorForm.FormClosing += ColorForm_FormClosing;
+        }
+
+        private void ColorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            loadSensorConfig();
+            loadUserSettings();
         }
 
         #region Help Menu

@@ -143,8 +143,6 @@ namespace WeatherStation2023
         /// <param name="e"></param>
         private void statBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //BackgroundWorker worker = sender as BackgroundWorker;
-
             try
             {
                 sql = "SELECT MAX(" + Properties.Settings.Default.IdProp + ") AS max_id, MIN(" + Properties.Settings.Default.DbTempValProp + ") AS min_t, "
