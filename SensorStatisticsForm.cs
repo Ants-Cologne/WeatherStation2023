@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using MySql.Data.MySqlClient;
 
 namespace WeatherStation2023
@@ -14,6 +15,8 @@ namespace WeatherStation2023
     public partial class SensorStatisticsForm : Form
     {
         int sensorId;
+        List<Dictionary<string, string>> allSensorValues;
+
         // Database variables.
         MySqlConnection conDataBase;
         MySqlDataReader dbReader;
@@ -25,7 +28,11 @@ namespace WeatherStation2023
         {
             InitializeComponent();
 
+            allSensorValues = new List<Dictionary<string, string>>();
+
             statusLabel.Text = "Loading...";
+
+            changeXaxis();
 
             init(name);
 
@@ -83,6 +90,14 @@ namespace WeatherStation2023
         private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void changeXaxis()
+        {
+            if (Properties.Settings.Default.SensorXAxis != "")
+            {
+                formatToolStripComboBox.Text = Properties.Settings.Default.SensorXAxis;
+            }
         }
 
         #region Application Settings: position, size and name
@@ -147,30 +162,7 @@ namespace WeatherStation2023
             try
             {
                 DateTime dt = DateTime.Now;
-                //int cnt = 0;
-
-                List<Dictionary<string, string>> allSensorValues = new List<Dictionary<string,string>>();
-
-                
-                /*result.Add("id", "");
-                result.Add("temp", "");
-                result.Add("hygro", "");
-                result.Add("sensor_id", "");
-                result.Add("created_at", "");*/
-
-                //string query;
-
-                /*if (filterComboBox.Text == "")      // not used, yet
-                {
-                    //query = "select * from antstation.raw_data;";
-
-                    query = "select * from " + Properties.Settings.Default.DbProp + "." + Properties.Settings.Default.DbTableProp + " WHERE date(created_at) = '" + dt.ToString("yyyy-MM-dd") + "'; ";
-                }
-                else
-                {
-                    dt = DateTime.Parse(filterComboBox.Text);
-                    query = "select * from " + Properties.Settings.Default.DbProp + "." + Properties.Settings.Default.DbTableProp + " WHERE date(created_at) = '" + filterComboBox.Text + "'; ";    //Month and Year doesn't work
-                }*/
+                allSensorValues.Clear();
 
                 conDataBase.Open();
                 command = new MySqlCommand(sql, conDataBase);
@@ -178,22 +170,12 @@ namespace WeatherStation2023
 
                 while (dbReader.Read())     
                 {
-                    /*currentTemp = dbReader.GetDouble(Properties.Settings.Default.DbTempValProp);
-                    currentHygro = dbReader.GetDouble(Properties.Settings.Default.DbHumValProp);
-                    dt = dbReader.GetDateTime(Properties.Settings.Default.CreatedAtProp);*/
-
                     Dictionary<string, string> result = new Dictionary<string, string>();
                     result["id"] = dbReader.GetInt32(Properties.Settings.Default.IdProp).ToString();
-                    //result["temp"] = string.Format("{0:N2}", dbReader.GetDouble(Properties.Settings.Default.DbTempValProp)) + "°C";
-                    //result["hygro"] = string.Format("{0:N2}", dbReader.GetDouble(Properties.Settings.Default.DbHumValProp)) + "%";
                     result["sensor_id"] = dbReader.GetInt32(Properties.Settings.Default.DbSensValProp).ToString();
                     dt = dbReader.GetDateTime(Properties.Settings.Default.CreatedAtProp);
-                    //result["created_at"] = dt.ToString("dd-MMM-yyyy HH:mm:ss");
-                    //result["id"] = dbReader.GetInt32(Properties.Settings.Default.IdProp).ToString();
                     result["temp"] = dbReader.GetDouble(Properties.Settings.Default.DbTempValProp).ToString();
                     result["hygro"] = dbReader.GetDouble(Properties.Settings.Default.DbHumValProp).ToString();
-                    //result["sensor_id"] = dbReader.GetInt32(Properties.Settings.Default.DbSensValProp).ToString();
-                    //dt = dbReader.GetDateTime(Properties.Settings.Default.CreatedAtProp);
                     result["created_at"] = dt.ToString();
 
                     allSensorValues.Add(result);
@@ -218,52 +200,34 @@ namespace WeatherStation2023
         private void sensorWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             List<Dictionary<string, string>> tmp = checkBackGroundWorker(e);
-            //int cnt = 0;
-
-            /*string year = dt.Year.ToString();
-
-            string month = dt.Month.ToString();
-
-            string day = year + "-" + month + "-" + dt.Day.ToString();
-
-            if (!filterComboBox.Items.Contains(year))
-            {
-                filterComboBox.Items.Add(year);
-            }
-
-            if (!filterComboBox.Items.Contains(year + "-" + month))
-            {
-                filterComboBox.Items.Add(year + "-" + month);
-            }
-
-            if (!filterComboBox.Items.Contains(day))
-            {
-                filterComboBox.Items.Add(day);
-            }*/
             
             if (tmp != null)
             {
                 statusLabel.Text = "Loaded " + tmp.Count.ToString() + " datasets";
-                //MessageBox.Show(tmp.Count.ToString());
                 sensorChart.Series[0].Points.Clear();
                 sensorChart.Series[1].Points.Clear();
 
                 for (int i = 0; i < tmp.Count; i++)
                 {
                     DateTime dt = DateTime.Parse(tmp[i]["created_at"]);
-                    //MessageBox.Show(dt.ToString());
+                    if (dt != null)
+                    {
+                        if (!filterComboBox.Items.Contains(dt.Year.ToString()))
+                        {
+                            filterComboBox.Items.Add(dt.Year.ToString());
+                        }
+                        if (!filterComboBox.Items.Contains(dt.Year + "-" + dt.Month.ToString()))
+                        {
+                            filterComboBox.Items.Add(dt.Year + "-" + dt.Month.ToString());
+                        }
+                        if (!filterComboBox.Items.Contains(dt.Year + "-" + dt.Month.ToString() + "-" + dt.Day.ToString()))
+                        {
+                            filterComboBox.Items.Add(dt.Year + "-" + dt.Month.ToString() + "-" + dt.Day.ToString());
+                        }
+                    }
                     sensorChart.Series[1].Points.AddXY(dt, Double.Parse(tmp[i]["temp"]));
                     sensorChart.Series[0].Points.AddXY(dt, Double.Parse(tmp[i]["hygro"]));
                 } 
-
-/*                foreach (Dictionary<string, string> series in tmp)
-                {
-                    //MessageBox.Show(series["id"].ToString() + " - " + series["created_at"]);
-                    DateTime dt = DateTime.Parse(series["created_at"]);
-                    MessageBox.Show(dt.ToString());
-                    sensorChart.Series[1].Points.AddXY(dt, Double.Parse(series["temp"]));
-                    sensorChart.Series[0].Points.AddXY(dt, Double.Parse(series["hygro"]));
-                }*/
             }
         }
 
@@ -293,6 +257,20 @@ namespace WeatherStation2023
             {
                 sensorWorker.RunWorkerAsync();
             }
+        }
+
+        private void formatToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (formatToolStripComboBox.Text != "")
+            {
+                formatXAxis(formatToolStripComboBox.Text);
+            }
+        }
+
+        private void formatXAxis(string format)
+        {
+            sensorChart.ChartAreas[0].AxisX.LabelStyle.Format = format;
+            Properties.Settings.Default.SensorXAxis = format;
         }
     }
 }

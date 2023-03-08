@@ -310,5 +310,17 @@ namespace WeatherStation2023.Properties {
                 this["ShowDebug"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SensorXAxis {
+            get {
+                return ((string)(this["SensorXAxis"]));
+            }
+            set {
+                this["SensorXAxis"] = value;
+            }
+        }
     }
 }

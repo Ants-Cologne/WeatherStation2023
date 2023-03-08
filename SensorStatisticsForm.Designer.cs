@@ -47,6 +47,8 @@
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.sensorWorker = new System.ComponentModel.BackgroundWorker();
             this.sensorTimer = new System.Windows.Forms.Timer(this.components);
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.formatToolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.senorMenuStrip.SuspendLayout();
             this.statStatusStrip.SuspendLayout();
             this.statToolStrip.SuspendLayout();
@@ -102,7 +104,9 @@
             this.exitTSB,
             this.toolStripSeparator1,
             this.toolStripLabel1,
-            this.filterComboBox});
+            this.filterComboBox,
+            this.toolStripLabel2,
+            this.formatToolStripComboBox});
             this.statToolStrip.Location = new System.Drawing.Point(0, 24);
             this.statToolStrip.Name = "statToolStrip";
             this.statToolStrip.Size = new System.Drawing.Size(670, 39);
@@ -143,6 +147,8 @@
             // 
             // sensorChart
             // 
+            chartArea2.AxisX.IsLabelAutoFit = false;
+            chartArea2.AxisX.LabelStyle.Angle = 45;
             chartArea2.AxisX.Title = "Time";
             chartArea2.AxisY.Title = "Value";
             chartArea2.Name = "ChartArea1";
@@ -159,12 +165,16 @@
             series3.Legend = "Legend1";
             series3.LegendText = "Humidity [%]";
             series3.Name = "humidity";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series4.ChartArea = "ChartArea1";
             series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series4.Color = System.Drawing.Color.Red;
             series4.Legend = "Legend1";
             series4.LegendText = "Temperature [°C]";
             series4.Name = "temperature";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.sensorChart.Series.Add(series3);
             this.sensorChart.Series.Add(series4);
             this.sensorChart.Size = new System.Drawing.Size(670, 448);
@@ -180,8 +190,28 @@
             // sensorTimer
             // 
             this.sensorTimer.Enabled = true;
-            this.sensorTimer.Interval = 30000;
+            this.sensorTimer.Interval = 60000;
             this.sensorTimer.Tick += new System.EventHandler(this.sensorTimer_Tick);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(79, 36);
+            this.toolStripLabel2.Text = "Format x-axis";
+            // 
+            // formatToolStripComboBox
+            // 
+            this.formatToolStripComboBox.Items.AddRange(new object[] {
+            "MMM",
+            "MMMM",
+            "dd.MM.yyyy",
+            "MM.yyyy",
+            "MMM.yyyy",
+            "MMMM.yyyy",
+            "MM.yy"});
+            this.formatToolStripComboBox.Name = "formatToolStripComboBox";
+            this.formatToolStripComboBox.Size = new System.Drawing.Size(121, 39);
+            this.formatToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.formatToolStripComboBox_SelectedIndexChanged);
             // 
             // SensorStatisticsForm
             // 
@@ -226,5 +256,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart sensorChart;
         private System.ComponentModel.BackgroundWorker sensorWorker;
         private System.Windows.Forms.Timer sensorTimer;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripComboBox formatToolStripComboBox;
     }
 }
