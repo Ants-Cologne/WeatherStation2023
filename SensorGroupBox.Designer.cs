@@ -108,33 +108,33 @@
             this.tempLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tempLabel.AutoSize = true;
             this.tempLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tempLabel.Location = new System.Drawing.Point(19, 24);
+            this.tempLabel.Location = new System.Drawing.Point(49, 24);
             this.tempLabel.Name = "tempLabel";
-            this.tempLabel.Size = new System.Drawing.Size(104, 31);
+            this.tempLabel.Size = new System.Drawing.Size(44, 31);
             this.tempLabel.TabIndex = 3;
-            this.tempLabel.Text = "23.5°C";
+            this.tempLabel.Text = "---";
             // 
             // humLabel
             // 
             this.humLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.humLabel.AutoSize = true;
             this.humLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.humLabel.Location = new System.Drawing.Point(169, 24);
+            this.humLabel.Location = new System.Drawing.Point(195, 24);
             this.humLabel.Name = "humLabel";
-            this.humLabel.Size = new System.Drawing.Size(96, 31);
+            this.humLabel.Size = new System.Drawing.Size(44, 31);
             this.humLabel.TabIndex = 4;
-            this.humLabel.Text = "47.0%";
+            this.humLabel.Text = "---";
             // 
             // timeLabel
             // 
             this.timeLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.timeLabel.AutoSize = true;
             this.timeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timeLabel.Location = new System.Drawing.Point(311, 27);
+            this.timeLabel.Location = new System.Drawing.Point(345, 27);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(104, 26);
+            this.timeLabel.Size = new System.Drawing.Size(36, 26);
             this.timeLabel.TabIndex = 5;
-            this.timeLabel.Text = "23:50:03";
+            this.timeLabel.Text = "---";
             // 
             // SensorGroupBox
             // 

@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Configuration;
 
 namespace WeatherStation2023
 {
@@ -55,17 +47,5 @@ namespace WeatherStation2023
         {
             Close();
         }
-
-        /*private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // ConnectionSetupForm
-            // 
-            this.ClientSize = new System.Drawing.Size(338, 306);
-            this.Name = "ConnectionSetupForm";
-            this.ResumeLayout(false);
-
-        }*/
     }
 }

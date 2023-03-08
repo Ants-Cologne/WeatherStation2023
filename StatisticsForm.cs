@@ -113,15 +113,26 @@ namespace WeatherStation2023
 
         private void runBackgroundWorkers()
         {
-            statBackgroundWorker.RunWorkerAsync();
-
-            minT_backgroundWorker.RunWorkerAsync();
-
-            maxT_backgroundWorker.RunWorkerAsync();
-
-            minH_backgroundWorker.RunWorkerAsync();
-
-            maxH_backgroundWorker.RunWorkerAsync();
+            if (statBackgroundWorker.IsBusy == false)
+            {
+                statBackgroundWorker.RunWorkerAsync();
+            }
+            if (minT_backgroundWorker.IsBusy == false)
+            {
+                minT_backgroundWorker.RunWorkerAsync();
+            }
+            if (maxT_backgroundWorker.IsBusy == false)
+            {
+                maxT_backgroundWorker.RunWorkerAsync();
+            }
+            if (minH_backgroundWorker.IsBusy == false)
+            {
+                minH_backgroundWorker.RunWorkerAsync();
+            }          
+            if (maxH_backgroundWorker.IsBusy == false)
+            {
+                maxH_backgroundWorker.RunWorkerAsync();
+            }
         }
 
         #region Statistics Background Worker

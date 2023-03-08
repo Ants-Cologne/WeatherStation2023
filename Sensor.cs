@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Data.SqlClient;
-using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -81,11 +79,6 @@ namespace WeatherStation2023
             MyBackgroundWorker.RunWorkerCompleted +=
                 new RunWorkerCompletedEventHandler(
             backgroundWorker_RunWorkerCompleted);
-
-            // We don't use ProgressChanged as we're only fetching one row from the database.
-            /*myBackgroundWorker.ProgressChanged +=
-                new ProgressChangedEventHandler(
-            backgroundWorker_ProgressChanged);*/
         }
 
         /// <summary>
@@ -96,9 +89,6 @@ namespace WeatherStation2023
         private void backgroundWorker_DoWork(object sender,
             DoWorkEventArgs e)
         {
-            // Get the BackgroundWorker that raised this event.
-            //BackgroundWorker worker = sender as BackgroundWorker;
-
             try
             {
                 conDataBase.Open();

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Configuration;
+﻿using System.Windows.Forms;
 
 namespace WeatherStation2023
 {
@@ -23,8 +14,8 @@ namespace WeatherStation2023
                 "During this project I soldered a circuit board with five sensors, in my case DHT22 sensors that can measure temperature and humidity." +
                 "But any sensor with 3 lines (plus, data, ground) should work. The circuit board is connected to a Raspberry Pi that writes the sensor data to a " +
                 "MariaDB database via CronJob every 10 minutes.\nThe goal of this desktop application is to query this database and to display its data. " +
-                "" +
-                "\n\n\n© Dipl.-Biol. Björn Zedroßer 2021-23";
+                "\n\n\n" +
+                "© Dipl.-Biol. Björn Zedroßer 2021-23";
         }
 
         private void infoRichTextBox_LinkClicked(object sender, LinkClickedEventArgs e)

@@ -848,6 +848,7 @@
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.mapSensorsMenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mapSensorsMenuStrip;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

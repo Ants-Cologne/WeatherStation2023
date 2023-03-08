@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace WeatherStation2023
 {
@@ -74,15 +69,6 @@ namespace WeatherStation2023
         private void initSensors(List<Sensor> sens)
         {
             sensors = sens;
-
-            /*if (sensors != null)
-            {
-                foreach (Sensor sensor in sensors)
-                {
-                    //sensorComboBox.Items.Add(sensor.PublicLabel);
-
-                }
-            }*/
         }
 
         /// <summary>
@@ -120,7 +106,6 @@ namespace WeatherStation2023
                         count++;
                         while (line != null)
                         {
-                            //MessageBox.Show(count.ToString() + " - " + line);
                             if (line.StartsWith("#") && count == 2)
                             {
                                 commentRTB.Text = line;

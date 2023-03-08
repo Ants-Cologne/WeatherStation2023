@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-//using System.Windows.Media;
-//using LiveCharts;
-//using LiveCharts.Wpf;
-using System.Configuration;
-using MySql.Data.MySqlClient;
-using System.Security.Cryptography;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace WeatherStation2023
 {
@@ -25,13 +16,14 @@ namespace WeatherStation2023
         SensorStatisticsForm sensorStatisticsForm;
         ColorValues colorForm;
         StatisticsForm statisticsForm;
+        private static string config_file = "sensors.cfg";
 
         string[] sensors;
         List<Sensor> sensorList;
         List<String> sensorConfig;
 
         // Database variables.
-        MySqlConnection conDataBase, cdb1, cdb2, cdb3, cdb4;
+        MySqlConnection conDataBase;
         string connectionString;
         #endregion
 
@@ -179,6 +171,19 @@ namespace WeatherStation2023
             sensorStatisticsForm.Show();
         }
 
+        //https://stackoverflow.com/questions/5951496/how-do-i-capture-keys-f1-regardless-of-the-focused-control-on-a-form
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.F1)
+            {
+                showHelpForm();
+                return true;    // indicate that you handled this keystroke
+            }
+
+            // Call the base class
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void initDatabase()
         {
             connectionString = "server=" + Properties.Settings.Default.HostProp + "; " +
@@ -188,15 +193,11 @@ namespace WeatherStation2023
                     "database='" + Properties.Settings.Default.DbProp + "'; ";
 
             conDataBase = new MySqlConnection(connectionString);
-            cdb1 = new MySqlConnection(connectionString);
-            cdb2 = new MySqlConnection(connectionString);
-            cdb3 = new MySqlConnection(connectionString);
-            cdb4 = new MySqlConnection(connectionString);
         }
 
         private void loadSensorConfig()
         {
-            string mypath = Properties.Settings.Default.SaveLocation + "\\" + "sensors.cfg";
+            string mypath = Properties.Settings.Default.SaveLocation + "\\" + config_file;
             if (File.Exists(mypath))
             {
                 string line;
@@ -207,7 +208,7 @@ namespace WeatherStation2023
                     line = sr.ReadLine();
                     if (line != "[antconfig 1.0]")
                     {
-                        MessageBox.Show("Error: not a valid sensor configuration file!");
+                        Helpers.ShowError("Not a valid sensor configuration file!", "0006_Mfconf");
                     }
                     else
                     {
@@ -216,8 +217,6 @@ namespace WeatherStation2023
                             if (line.Length > 0 && line.Contains('\t'))
                             {
                                 sensorConfig.Add(line.Trim());
-                                //mappingGroups[count].AliasLabel.Text = listStrLineElements[1];
-                                //mappingGroups[count].FilenameLabel.Text = listStrLineElements[2];
 
                                 count++;
                             }
@@ -230,7 +229,7 @@ namespace WeatherStation2023
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Exception: " + ex.Message);
+                    Helpers.ShowError("Exception: " + ex.Message, "0007_Mfconf");
                 }
             }
         }
@@ -249,17 +248,15 @@ namespace WeatherStation2023
                     line = sr.ReadLine();
                     if (line != "[antconfig 1.0]")
                     {
-                        MessageBox.Show("Error: not a valid sensor settings file!");
+                        Helpers.ShowError("Not a valid species file: " + path, "0008_Mfspec");
                     }
                     else
                     {
                         count++;
                         while (line != null)
                         {
-                            //MessageBox.Show(count.ToString() + " - " + line);
-                            if (line.StartsWith("#"))
+                            if (line.StartsWith("#"))   // Ignore comment lines
                             {
-                                // Ignore comment lines
                                 count++;
                                 line = sr.ReadLine();
                                 continue;
@@ -270,8 +267,7 @@ namespace WeatherStation2023
                                 line = sr.ReadLine();
                                 continue;
                             }
-                            // Species
-                            if (count == 3)
+                            if (count == 3)     // Species
                             {
                                 spec = line;
                             }
@@ -285,8 +281,7 @@ namespace WeatherStation2023
                 }
                 catch (Exception)
                 {
-
-                    throw;
+                    Helpers.ShowError("Corrupt species file: " + path, "0009_Mfspec");
                 }
             }           
 
@@ -306,7 +301,7 @@ namespace WeatherStation2023
                     line = sr.ReadLine();
                     if (line != "[antconfig 1.0]")
                     {
-                        MessageBox.Show("Error: not a valid sensor settings file!");
+                        Helpers.ShowError("Colors could not be loaded. Not a valid species file: " + path, "0010_Mfcol");
                     }
                     else
                     {
@@ -314,11 +309,9 @@ namespace WeatherStation2023
                         
                         while (line != null)
                         {
-                            //MessageBox.Show(count.ToString() + " - " + line);
-                            //MessageBox.Show(count.ToString());
-                            if (line.StartsWith("#"))
+                            if (line.StartsWith("#"))       // Ignore comment lines
                             {
-                                // Ignore comment lines
+                                
                                 line = sr.ReadLine();
                                 count++;
                                 continue;
@@ -328,35 +321,29 @@ namespace WeatherStation2023
                                 line = sr.ReadLine();
                                 continue;
                             }
-                            // Species
-                            if (count == 3)
+                            if (count == 3)     // Species
                             {
                                 line = sr.ReadLine();
                                 count++;
                                 continue;
                             }
-                            // Min Temp
-                            if (count == 4)
+                            if (count == 4)     // Min Temp
                             {
-                                //MessageBox.Show("Temp min: " + line);
                                 sens.MinTemperature = Convert.ToInt16(line);
                             }
-                            // Max Temp
-                            if (count == 5)
+                            if (count == 5)     // Max Temp
                             {
-                                //MessageBox.Show("Temp max: " + line);
                                 sens.MaxTemperature = Convert.ToInt16(line);
                             }
-                            // Min Humidity
-                            if (count == 6)
+                            if (count == 6)     // Min Humidity
                             {
                                 sens.MinHumidity = Convert.ToInt16(line);
                             }
-                            // Max Humidity
-                            if (count == 7)
+                            if (count == 7)     // Max Humidity
                             {
                                 sens.MaxHumidity = Convert.ToInt16(line);
                             }
+
                             //Read the next line
                             count++;
                             line = sr.ReadLine();
@@ -366,8 +353,7 @@ namespace WeatherStation2023
                 }
                 catch (Exception)
                 {
-
-                    throw;
+                    Helpers.ShowError("Colors could not be loaded. Not a valid species file: " + path, "0010_Mfcol");
                 }
             }
         }
@@ -571,7 +557,6 @@ namespace WeatherStation2023
                 }
                 catch (Exception ex)
                 {
-                    // at least we need to check if the host is not available: currently app crashes
                     Helpers.ShowError(ex.Message, "0001_BgwMf-" + s.ID.ToString());
                 }
             }
