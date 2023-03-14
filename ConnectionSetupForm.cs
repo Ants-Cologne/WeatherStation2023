@@ -5,9 +5,12 @@ namespace WeatherStation2023
 {
     public partial class ConnectionSetupForm : Form
     {
+        public Helpers.ResultCode Result;
+
         public ConnectionSetupForm()
         {
             InitializeComponent();
+            Result = Helpers.ResultCode.None;
 
             appNameTB.Text = Properties.Settings.Default.ApplicationName;
             userTB.Text = Properties.Settings.Default.UserProp;
@@ -39,12 +42,14 @@ namespace WeatherStation2023
             Properties.Settings.Default.CreatedAtProp = createdAtColTB.Text;
             Properties.Settings.Default.IdProp = IdColTB.Text;
             Properties.Settings.Default.CountSensorProp = sensorsTB.Text;
-            
+
+            Result = Helpers.ResultCode.Ok;
             Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
+            Result = Helpers.ResultCode.Cancel;
             Close();
         }
     }

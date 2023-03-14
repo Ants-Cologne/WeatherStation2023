@@ -6,6 +6,13 @@ namespace WeatherStation2023
 {
     public class Helpers
     {
+        public enum ResultCode
+        {
+            Cancel,
+            Ok,
+            None
+        }
+
         public static Color GetColorFromInt(int value)
         {
             byte[] bytes = BitConverter.GetBytes(value);

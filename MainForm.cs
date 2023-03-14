@@ -36,6 +36,13 @@ namespace WeatherStation2023
 
             connectionStatusLbl.Text = "";
 
+            init();
+
+            //buttonClear.Click += (sender, e) => flowLayoutPanel.Controls.Clear();
+        }
+
+        private void init()
+        {
             initDatabase();
 
             checkCountSensorProp();
@@ -55,12 +62,10 @@ namespace WeatherStation2023
             }
             else
             {
-                connectionStatusLbl.Text = "Please run Setup->Database Connection to get a database connection..."; 
+                connectionStatusLbl.Text = "Please run Setup->Database Connection to get a database connection...";
             }
 
             checkToolbar();
-
-            //buttonClear.Click += (sender, e) => flowLayoutPanel.Controls.Clear();
         }
 
         #region Application Settings: position, size and name
@@ -375,11 +380,15 @@ namespace WeatherStation2023
         }
         private void ConnectionForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Properties.Settings.Default.Save();
-            Properties.Settings.Default.Reload();
-            checkCountSensorProp();
-            this.Text = Properties.Settings.Default.ApplicationName;
+            if (connectionSetupForm.Result == Helpers.ResultCode.Ok)
+            {
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.Reload();
+                clearDashboardTable();
+                init();
+            }
         }
+            
         private void checkCountSensorProp()
         {
             if (Properties.Settings.Default.CountSensorProp.Length >= 1)
@@ -462,6 +471,8 @@ namespace WeatherStation2023
 
         private void clearDashboardTable()
         {
+            sensorList = new List<Sensor>();
+            sensorConfig = new List<String>();
             flowLayoutPanel.Controls.Clear();
         }
 
