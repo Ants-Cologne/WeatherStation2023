@@ -149,7 +149,7 @@ namespace WeatherStation2023
                 line = sr.ReadLine();
                 if (line != "[antconfig 1.0]")
                 {
-                    MessageBox.Show("Error: not a valid sensor configuration file!");
+                    Helpers.ShowError("Error: not a valid sensor configuration file!", "0011_MapFcfg");
                 }
                 else
                 {
@@ -173,7 +173,7 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError("Error: not a valid sensor configuration file! " + ex.Message, "0011_MapFcfg");
             }
         }
 
@@ -208,7 +208,7 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError("Exception: " + ex.Message, "0012_MapFsav");
             }
         }
     }

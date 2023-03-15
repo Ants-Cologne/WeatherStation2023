@@ -36,15 +36,13 @@ namespace WeatherStation2023
 
             connectionStatusLbl.Text = "";
 
-            init();
+            initDatabase();
 
-            //buttonClear.Click += (sender, e) => flowLayoutPanel.Controls.Clear();
+            init();
         }
 
         private void init()
         {
-            initDatabase();
-
             checkCountSensorProp();
 
             loadSensorConfig();

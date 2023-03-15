@@ -102,7 +102,7 @@ namespace WeatherStation2023
                     line = sr.ReadLine();
                     if (line != "[antconfig 1.0]")
                     {
-                        MessageBox.Show("Error: not a valid sensor settings file!");
+                        Helpers.ShowError("Error: not a valid sensor settings file: " + filename, "0014_CFldctxt");
                     }
                     else
                     {
@@ -161,10 +161,9 @@ namespace WeatherStation2023
                     sr.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Helpers.ShowError(ex.Message, "");
-                //MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError("Error: not a valid sensor settings file: " + filename, "0014_CFldtxt");
             }
         }
 
@@ -213,9 +212,9 @@ namespace WeatherStation2023
                     //Close the file
                     sw.Close();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Exception: " + ex.Message);
+                    Helpers.ShowError("Error saving species file: " + saveTxtFileDialog.FileName, "0015_CFsvtxt");
                 }
             }
         }
@@ -330,7 +329,8 @@ namespace WeatherStation2023
                 }
                 else
                 {
-                    MessageBox.Show("Value should be between " + tb.Minimum.ToString() + " and " + tb.Maximum.ToString() + "!");
+                    Helpers.ShowWarning("Value should be between " + tb.Minimum.ToString() + " and " + tb.Maximum.ToString() + "!",
+                        "0016_CFval");
                 }
             }
             else if (value != "") MessageBox.Show("Please enter only integer numbers.");
@@ -361,13 +361,7 @@ namespace WeatherStation2023
             mappingForm = new MappingForm(sensors);
             mappingForm.MdiParent = this.ParentForm;
             mappingForm.StartPosition = FormStartPosition.CenterParent;
-            mappingForm.FormClosed += new FormClosedEventHandler(MappingForm_FormClosed);
             mappingForm.ShowDialog();
-        }
-
-        private void MappingForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //throw new NotImplementedException();
         }
 
         private void speciesComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -400,7 +394,7 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Helpers.ShowError(ex.Message, "0017_CFldtxts");
             }
         }
 

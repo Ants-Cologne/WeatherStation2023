@@ -174,10 +174,9 @@ namespace WeatherStation2023
 
                 e.Result = result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // implement exceptions here: we're ignoring them now
-                throw;
+                Helpers.ShowError("Exception: " + ex.Message, "0013_BgStatFrun");
             }
         }
 
@@ -230,7 +229,7 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError("Exception: " + ex.Message, "0013_BgStatFrun");
             }
         }
 
@@ -282,7 +281,7 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError("Exception: " + ex.Message, "0013_BgStatFrun");
             }
         }
 
@@ -334,7 +333,7 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError("Exception: " + ex.Message, "0013_BgStatFrun");
             }
         }
 
@@ -386,7 +385,7 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError("Exception: " + ex.Message, "0013_BgStatFrun");
             }
         }
 
