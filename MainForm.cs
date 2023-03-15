@@ -506,14 +506,19 @@ namespace WeatherStation2023
             colorForm = new ColorValues(sensorList);
             colorForm.MdiParent = this.ParentForm;
             colorForm.StartPosition = FormStartPosition.CenterParent;
+            colorForm.FormClosed += new FormClosedEventHandler(ColorForm_FormClosed);
             colorForm.ShowDialog();
-            colorForm.FormClosing += ColorForm_FormClosing;
         }
 
-        private void ColorForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void ColorForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            loadSensorConfig();
-            loadUserSettings();
+            if (colorForm.Result == Helpers.ResultCode.Ok)
+            {
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.Reload();
+                clearDashboardTable();
+                init();
+            }
         }
 
         #region Help Menu

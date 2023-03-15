@@ -10,10 +10,13 @@ namespace WeatherStation2023
     {
         List<Sensor> sensors;
         MappingForm mappingForm;
+        public Helpers.ResultCode Result;
 
         public ColorValues(List<Sensor> sens)
         {
             InitializeComponent();
+
+            Result = Helpers.ResultCode.None;
 
             initSensors(sens);
 
@@ -160,7 +163,8 @@ namespace WeatherStation2023
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Exception: " + ex.Message);
+                Helpers.ShowError(ex.Message, "");
+                //MessageBox.Show("Exception: " + ex.Message);
             }
         }
 
@@ -398,6 +402,16 @@ namespace WeatherStation2023
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void ColorValues_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Result = Helpers.ResultCode.Ok;
+        }
+
+        private void ColorValues_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Result = Helpers.ResultCode.Ok;
         }
     }
 }
