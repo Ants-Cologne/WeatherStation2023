@@ -322,5 +322,41 @@ namespace WeatherStation2023.Properties {
                 this["SensorXAxis"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseWebserver {
+            get {
+                return ((bool)(this["UseWebserver"]));
+            }
+            set {
+                this["UseWebserver"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WebserverURL {
+            get {
+                return ((string)(this["WebserverURL"]));
+            }
+            set {
+                this["WebserverURL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WebserverLocation {
+            get {
+                return ((string)(this["WebserverLocation"]));
+            }
+            set {
+                this["WebserverLocation"] = value;
+            }
+        }
     }
 }

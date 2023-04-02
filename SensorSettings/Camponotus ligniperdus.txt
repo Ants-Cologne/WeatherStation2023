@@ -1,0 +1,7 @@
+[antconfig 1.0]
+# # # Camponotus ligniperdus - Ants Cologne
+Camponotus barbaricus
+18
+28
+30
+50

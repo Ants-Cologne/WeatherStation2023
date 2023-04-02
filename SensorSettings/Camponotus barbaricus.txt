@@ -1,7 +1,7 @@
 [antconfig 1.0]
-# # Camponotus barbaricus - Ants Cologne
+# # # Camponotus barbaricus - Ants Cologne
 Camponotus barbaricus
-15
+18
+28
 30
-30
-70
+50

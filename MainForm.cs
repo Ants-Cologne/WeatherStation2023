@@ -16,6 +16,7 @@ namespace WeatherStation2023
         SensorStatisticsForm sensorStatisticsForm;
         ColorValues colorForm;
         StatisticsForm statisticsForm;
+        WebsiteForm websiteForm;
         private static string config_file = "sensors.cfg";
 
         string[] sensors;
@@ -64,6 +65,8 @@ namespace WeatherStation2023
             }
 
             checkToolbar();
+
+            checkWebserver();
         }
 
         #region Application Settings: position, size and name
@@ -432,6 +435,24 @@ namespace WeatherStation2023
                 help_infoTSB.Visible = false;
             }
         }
+
+        private void checkWebserver()
+        {
+            if (Properties.Settings.Default.UseWebserver)
+            {
+                websiteSeperatorToolStripMenuItem.Visible = true;
+                websiteToolStripSeparator.Visible = true;
+                websiteToolStripButton.Visible = true;
+                websiteToolStripMenuItem.Visible = true;
+            }
+            else
+            {
+                websiteSeperatorToolStripMenuItem.Visible = false;
+                websiteToolStripSeparator.Visible = false;
+                websiteToolStripButton.Visible = false;
+                websiteToolStripMenuItem.Visible = false;
+            }
+        }
         private void showHelpIconsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (showHelpIconsToolStripMenuItem.Checked)
@@ -472,6 +493,7 @@ namespace WeatherStation2023
             sensorList = new List<Sensor>();
             sensorConfig = new List<String>();
             flowLayoutPanel.Controls.Clear();
+            sensorStatisticsToolStripMenuItem.DropDownItems.Clear();        // bugfix
         }
 
         private void statisticsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -586,6 +608,50 @@ namespace WeatherStation2023
                 catch (Exception ex)
                 {
                     Helpers.ShowError(ex.Message, "0001_BgwMf-" + s.ID.ToString());
+                }
+            }
+        }
+
+        private void websiteSetupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showWebsiteSetupForm();
+        }
+
+        private void websiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showWebsite();
+        }
+
+        private void websiteToolStripButton_Click(object sender, EventArgs e)
+        {
+            showWebsite();
+        }
+
+        private void showWebsiteSetupForm()
+        {
+            websiteForm = new WebsiteForm();
+            websiteForm.MdiParent = this.ParentForm;
+            websiteForm.StartPosition = FormStartPosition.CenterParent;
+            websiteForm.FormClosed += WebsiteForm_FormClosed;
+            websiteForm.Show();
+        }
+
+        private void WebsiteForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            checkWebserver();
+        }
+
+        private void showWebsite()
+        {
+            if (Properties.Settings.Default.WebserverURL != "")
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(Properties.Settings.Default.WebserverURL);
+                }
+                catch (Exception ex)
+                {
+                    Helpers.ShowError("Website could not be loaded! " + ex.Message, "0018_wwwerr");
                 }
             }
         }

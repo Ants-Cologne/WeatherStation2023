@@ -1,7 +1,7 @@
 [antconfig 1.0]
-# Lasius niger - Ants Cologne
+# # Lasius niger - Ants Cologne
 Lasius niger
-12
-25
+18
+28
 30
-80
+50

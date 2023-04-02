@@ -7,6 +7,7 @@ namespace WeatherStation2023
         public InfoForm()
         {
             InitializeComponent();
+            InitializeComponents();
             this.Text = "About " + Properties.Settings.Default.ApplicationName;
 
             infoRichTextBox.Text = "Weather Station 2023 v1.0 \n\n" +
@@ -21,6 +22,21 @@ namespace WeatherStation2023
         private void infoRichTextBox_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        private void InitializeComponents()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InfoForm));
+            this.SuspendLayout();
+            // 
+            // InfoForm
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "InfoForm";
+            this.ShowInTaskbar = false;
+            this.ResumeLayout(false);
+
         }
     }
 }
