@@ -116,7 +116,6 @@ namespace WeatherStation2023
         {
             if (Properties.Settings.Default.WebserverURL != "")
             {
-                string tmp = "";
                 if (Properties.Settings.Default.WebserverURL.StartsWith("http://"))
                 {
                     urlTextBox.Text = Properties.Settings.Default.WebserverURL.Remove(0, 7);
