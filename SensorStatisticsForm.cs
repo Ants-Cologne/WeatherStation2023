@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -305,6 +307,46 @@ namespace WeatherStation2023
         {
             sensorChart.ChartAreas[0].AxisX.LabelStyle.Format = format;
             Properties.Settings.Default.SensorXAxis = format;
+        }
+
+        private void exportAsCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            export();
+        }
+
+        private void exportToolStripButton_Click(object sender, EventArgs e)
+        {
+            export();
+        }
+
+        private void export()
+        {
+            DateTime thisDay = DateTime.Now;
+            List<Dictionary<string, string>> copyAllSensorValues = allSensorValues;
+            saveCSVFileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+            saveCSVFileDialog.FilterIndex = 1;
+            saveCSVFileDialog.RestoreDirectory = true;
+            saveCSVFileDialog.Title = "Export to CSV file";
+            saveCSVFileDialog.FileName = "sen" + sensorId.ToString() + "_" + thisDay.ToString("yyyyMMddHHmmss");
+
+            if (saveCSVFileDialog.ShowDialog() == DialogResult.OK && copyAllSensorValues.Count > 0)
+            {
+                var csv = new StringBuilder();
+                var newLine = "Data for sensor " + sensorId.ToString() + "\t, created at " + thisDay.ToString("yyyyMMdd HH:mm:ss");
+                csv.AppendLine(newLine);
+                newLine = "Created at:\tTemperature [°C]\tHumidity [%]";
+                csv.AppendLine(newLine);
+                for (int i = 0; i < copyAllSensorValues.Count; i++)
+                {
+                    DateTime dt = DateTime.Parse(copyAllSensorValues[i]["created_at"]);
+                    //newLine = string.Format("{0},{1},{2}", dt.ToString("yyyy-MM-dd HH:mm:ss"), copyAllSensorValues[i]["temp"], copyAllSensorValues[i]["hygro"]);
+                    newLine = dt.ToString("yyyy-MM-dd HH:mm:ss") + "\t" + Double.Parse(copyAllSensorValues[i]["temp"]) + "\t" + Double.Parse(copyAllSensorValues[i]["hygro"]);
+                    csv.AppendLine(newLine);
+                }
+
+                File.WriteAllText(saveCSVFileDialog.FileName, csv.ToString());
+                statusLabel.Text = saveCSVFileDialog.FileName + " successfully written...";
+            }
         }
     }
 }
