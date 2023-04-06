@@ -29,19 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SensorStatisticsForm));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SensorStatisticsForm));
             this.senorMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statStatusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statToolStrip = new System.Windows.Forms.ToolStrip();
             this.exitTSB = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.filterComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
@@ -49,9 +52,6 @@
             this.sensorChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.sensorWorker = new System.ComponentModel.BackgroundWorker();
             this.sensorTimer = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exportAsCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveCSVFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.senorMenuStrip.SuspendLayout();
             this.statStatusStrip.SuspendLayout();
@@ -79,11 +79,24 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // exportAsCSVToolStripMenuItem
+            // 
+            this.exportAsCSVToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exportAsCSVToolStripMenuItem.Image")));
+            this.exportAsCSVToolStripMenuItem.Name = "exportAsCSVToolStripMenuItem";
+            this.exportAsCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportAsCSVToolStripMenuItem.Text = "&Export as CSV";
+            this.exportAsCSVToolStripMenuItem.Click += new System.EventHandler(this.exportAsCSVToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(143, 6);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -135,6 +148,16 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
+            // exportToolStripButton
+            // 
+            this.exportToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.exportToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("exportToolStripButton.Image")));
+            this.exportToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.exportToolStripButton.Name = "exportToolStripButton";
+            this.exportToolStripButton.Size = new System.Drawing.Size(36, 36);
+            this.exportToolStripButton.Text = "Export as .csv";
+            this.exportToolStripButton.Click += new System.EventHandler(this.exportToolStripButton_Click);
+            // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
@@ -145,6 +168,7 @@
             // 
             this.filterComboBox.Items.AddRange(new object[] {
             "All data"});
+            this.filterComboBox.MaxDropDownItems = 15;
             this.filterComboBox.Name = "filterComboBox";
             this.filterComboBox.Size = new System.Drawing.Size(121, 39);
             this.filterComboBox.SelectedIndexChanged += new System.EventHandler(this.filterComboBox_SelectedIndexChanged);
@@ -164,7 +188,8 @@
             "MM.yyyy",
             "MMM.yyyy",
             "MMMM.yyyy",
-            "MM.yy"});
+            "MM.yy",
+            "HH:mm"});
             this.formatToolStripComboBox.Name = "formatToolStripComboBox";
             this.formatToolStripComboBox.Size = new System.Drawing.Size(121, 39);
             this.formatToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.formatToolStripComboBox_SelectedIndexChanged);
@@ -217,29 +242,6 @@
             this.sensorTimer.Enabled = true;
             this.sensorTimer.Interval = 60000;
             this.sensorTimer.Tick += new System.EventHandler(this.sensorTimer_Tick);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // exportAsCSVToolStripMenuItem
-            // 
-            this.exportAsCSVToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exportAsCSVToolStripMenuItem.Image")));
-            this.exportAsCSVToolStripMenuItem.Name = "exportAsCSVToolStripMenuItem";
-            this.exportAsCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportAsCSVToolStripMenuItem.Text = "&Export as CSV";
-            this.exportAsCSVToolStripMenuItem.Click += new System.EventHandler(this.exportAsCSVToolStripMenuItem_Click);
-            // 
-            // exportToolStripButton
-            // 
-            this.exportToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.exportToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("exportToolStripButton.Image")));
-            this.exportToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.exportToolStripButton.Name = "exportToolStripButton";
-            this.exportToolStripButton.Size = new System.Drawing.Size(36, 36);
-            this.exportToolStripButton.Text = "Export as .csv";
-            this.exportToolStripButton.Click += new System.EventHandler(this.exportToolStripButton_Click);
             // 
             // saveCSVFileDialog
             // 

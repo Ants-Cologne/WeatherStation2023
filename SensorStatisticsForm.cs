@@ -87,7 +87,13 @@ namespace WeatherStation2023
 
         private void filterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            changeFilter();
+        }
+
+        private void changeFilter()
+        {
             DateTime thisDay = DateTime.Today;
+            
             List<Dictionary<string, string>> copyAllSensorValues = allSensorValues;
 
             if (filterComboBox.Text.Length > 0)
@@ -100,7 +106,7 @@ namespace WeatherStation2023
                     DateTime dt = DateTime.Parse(item["created_at"]);
                     if (filterComboBox.Text.Length == 4)    // Year
                     {
-                        if (dt.Year == Int16.Parse(filterComboBox.Text)) 
+                        if (dt.Year == Int16.Parse(filterComboBox.Text))
                         {
                             sensorChart.Series[1].Points.AddXY(dt, Double.Parse(item["temp"]));
                             sensorChart.Series[0].Points.AddXY(dt, Double.Parse(item["hygro"]));
@@ -108,8 +114,8 @@ namespace WeatherStation2023
                     }
                     else if (filterComboBox.Text.Length == 7)   // Month
                     {
-                        if (dt.Year == Int16.Parse(filterComboBox.Text.Substring(0,4)) && 
-                            dt.Month == Int16.Parse(filterComboBox.Text.Substring(5,2)))
+                        if (dt.Year == Int16.Parse(filterComboBox.Text.Substring(0, 4)) &&
+                            dt.Month == Int16.Parse(filterComboBox.Text.Substring(5, 2)))
                         {
                             sensorChart.Series[1].Points.AddXY(dt, Double.Parse(item["temp"]));
                             sensorChart.Series[0].Points.AddXY(dt, Double.Parse(item["hygro"]));
@@ -117,7 +123,17 @@ namespace WeatherStation2023
                     }
                     else if (filterComboBox.Text.Length == 10)   // Today
                     {
+                        DateTime filterDay = DateTime.Parse(filterComboBox.Text);
+                        if (!filterComboBox.Items.Contains(filterComboBox.Text))
+                        {
+                            filterComboBox.Items.Add(filterComboBox.Text);
+                        }
                         if (dt.Date == thisDay.Date)
+                        {
+                            sensorChart.Series[1].Points.AddXY(dt, Double.Parse(item["temp"]));
+                            sensorChart.Series[0].Points.AddXY(dt, Double.Parse(item["hygro"]));
+                        }
+                        else if (dt.Date == filterDay.Date) 
                         {
                             sensorChart.Series[1].Points.AddXY(dt, Double.Parse(item["temp"]));
                             sensorChart.Series[0].Points.AddXY(dt, Double.Parse(item["hygro"]));
@@ -234,6 +250,7 @@ namespace WeatherStation2023
         private void sensorWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             List<Dictionary<string, string>> tmp = checkBackGroundWorker(e);
+            string filter = filterComboBox.Text;
             
             if (tmp != null)
             {
@@ -263,7 +280,15 @@ namespace WeatherStation2023
                     sensorChart.Series[1].Points.AddXY(dt, Double.Parse(tmp[i]["temp"]));
                     sensorChart.Series[0].Points.AddXY(dt, Double.Parse(tmp[i]["hygro"]));
                 }
-                filterComboBox.Text = "All data";
+                if (filter == "" || filter == "All data")
+                {
+                    filterComboBox.Text = "All data";
+                }
+                else
+                {
+                    filterComboBox.Text = filter;
+                    changeFilter();
+                }
             }
         }
 
@@ -339,7 +364,6 @@ namespace WeatherStation2023
                 for (int i = 0; i < copyAllSensorValues.Count; i++)
                 {
                     DateTime dt = DateTime.Parse(copyAllSensorValues[i]["created_at"]);
-                    //newLine = string.Format("{0},{1},{2}", dt.ToString("yyyy-MM-dd HH:mm:ss"), copyAllSensorValues[i]["temp"], copyAllSensorValues[i]["hygro"]);
                     newLine = dt.ToString("yyyy-MM-dd HH:mm:ss") + "\t" + Double.Parse(copyAllSensorValues[i]["temp"]) + "\t" + Double.Parse(copyAllSensorValues[i]["hygro"]);
                     csv.AppendLine(newLine);
                 }
